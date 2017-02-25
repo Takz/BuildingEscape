@@ -45,7 +45,7 @@ void UGrabber::FindAttachedPhysicsHandle()
 {
 	///Look for attached Physics handle
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-
+	if (!PhysicsHandle) { return; }
 	if (PhysicsHandle == nullptr) {
 		UE_LOG(LogTemp, Error, TEXT("%s is missing Physics Handle"), *GetOwner()->GetName());
 	}		
@@ -73,6 +73,7 @@ void UGrabber::Release() {
 void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	if (!PhysicsHandle) { return; }
 
 	//If physics handle attached
 	if (PhysicsHandle->GrabbedComponent) {
